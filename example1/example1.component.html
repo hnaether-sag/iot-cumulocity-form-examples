@@ -1,0 +1,93 @@
+<form [formGroup]="form" (ngSubmit)="form.valid && submit()">
+    <fieldset>
+      <div class="legend form-block" translate>
+        Example 1
+      </div>
+      <div class="form-group">
+        <label for="ssid" translate>SSID</label>
+        <input
+          type="text"
+          id="ssid"
+          class="form-control"
+          placeholder="e.g. Company Wifi"
+          name="ssid"
+          formControlName="ssid"
+          autocomplete="off"
+          no
+          required
+        />
+        <c8y-messages *ngIf="ssid.invalid && (ssid.dirty || ssid.touched)">
+          <c8y-message *ngIf="ssid.errors.required" translate>SSID is required</c8y-message>
+        </c8y-messages>
+      </div>
+      <div class="form-group">
+        <label for="encryption-type" translate>Encryption type</label>
+        <div class="c8y-select-wrapper">
+          <select
+            id="encryption-type"
+            class="form-control"
+            name="encryptionType"
+            formControlName="encryptionType"
+            required
+          >
+            <option *ngFor="let encryptionType of encryptionTypes" [value]="encryptionType">
+              {{ encryptionType | translate }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group" *ngIf="username">
+        <label for="wifi-username" translate>Username</label>
+        <input
+          type="text"
+          id="wifi-username"
+          class="form-control"
+          autocomplete="username"
+          name="wifi-username"
+          formControlName="username"
+          required
+        />
+        <c8y-messages *ngIf="username.invalid && (username.dirty || username.touched)">
+          <c8y-message *ngIf="username.errors.required" translate>Username is required</c8y-message>
+        </c8y-messages>
+      </div>
+      <div class="form-group">
+        <label for="wifi-password" translate>Password</label>
+        <input
+          type="password"
+          id="wifi-password"
+          class="form-control"
+          autocomplete="new-password"
+          name="wifi-password"
+          formControlName="password"
+          required
+        />
+        <c8y-messages *ngIf="password.invalid && (password.dirty || password.touched)">
+          <c8y-message *ngIf="password.errors.required" translate>Password is required</c8y-message>
+          <c8y-message *ngIf="password.errors.minlength" translate
+            >Password must have at least 8 characters</c8y-message
+          >
+          <c8y-message *ngIf="password.errors.maxlength" translate
+            >Password must have less than 63 characters</c8y-message
+          >
+        </c8y-messages>
+      </div>
+    </fieldset>
+    <button
+      title="{{ 'Reset' | translate }}"
+      class="btn btn-default"
+      type="button"
+      (click)="resetFormValues()"
+    >
+      {{ 'Reset' | translate }}
+    </button>
+    <button
+      title="{{ 'Update WIFI settings' | translate }}"
+      class="btn btn-primary"
+      type="submit"
+      [disabled]="!form.valid || form.pristine"
+    >
+      {{ 'Save WIFI settings' | translate }}
+    </button>
+  </form>
+  
